@@ -1,9 +1,9 @@
 // src/App.jsx
-import { useState } from 'react';
-import './App.css'
+import React, { useState, useEffect } from 'react';
 import WeatherSearch from './components/WeatherSearch';
 import WeatherDetails from './components/WeatherDetails';
 import * as weatherService from './assets/services/weatherService';
+import './App.css'
 
 const App = () => {
     const [weather, setWeather] = useState({});
@@ -17,6 +17,20 @@ const App = () => {
         };
         setWeather(newWeatherState);
     };
+
+    useEffect(() => {
+        const fetchDefaultData = async () => {
+            const data = await weatherService.show('New York');
+            const newWeatherState = {
+                location: data.location.name,
+                temperature: data.current.temp_f,
+                condition: data.current.condition.text,
+            };
+            setWeather(newWeatherState);
+        };
+
+        fetchDefaultData();
+    }, []);
 
     console.log('State:', weather);
 

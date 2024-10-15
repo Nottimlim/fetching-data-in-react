@@ -1,27 +1,28 @@
 // src/components/WeatherSearch.jsx
 import { useState } from 'react';
 
-const WeatherSearch = (props) => {
+const WeatherSearch = ({ fetchData }) => {
     const [city, setCity] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.fetchData(city); // Call the fetch function with the city
-        setCity(''); // Clear the input field
+        fetchData(city);
+        setCity('');
     };
 
     return (
         <section>
             <h2>Search</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="search-form">
                 <label htmlFor="city">Enter a city:</label>
                 <input
                     id="city"
                     type="text"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
+                    className="search-input"
                 />
-                <button type="submit">Search</button>
+                <button type="submit" className="search-button">Search</button>
             </form>
         </section>
     );
